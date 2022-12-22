@@ -16,8 +16,6 @@ instance Show Value where
   show (Tuple t) = "(" ++ intercalate "," (map show t) ++ ")"
   show _ = "f"
 
---data Expr = IntLit Int | Name Symbol | TupleLit [Expr] | App Expr Expr | Let Pattern Expr Expr | Case Expr [(Pattern, Expr)] | Lambda Pattern Expr | Seq Expr Expr deriving Show
-
 assignPattern :: Map Symbol Value -> Pattern -> Value -> Maybe (Map Symbol Value)
 assignPattern m (IntPat n) (Int n') | n == n' = Just m
 assignPattern m (NamePat n) v = Just $ Map.insert n v m
