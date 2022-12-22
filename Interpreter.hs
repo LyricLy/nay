@@ -9,7 +9,10 @@ import Data.Maybe
 import Data.List
 import AST
 
-data Value = Int Int | Tuple [Value] | Function (Value -> IO Value)
+data Value
+  = Int Int
+  | Tuple [Value]
+  | Function (Value -> IO Value)
 
 instance Show Value where
   show (Int n) = show n

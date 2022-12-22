@@ -34,7 +34,12 @@ name :: Parser Expr
 name = lexeme $ Name <$> symbol''
 
 pattern :: Parser Pattern
-pattern = try (TuplePat <$> tuply pattern) <|> parens pattern <|> (Wildcard <$ symbol "_") <|> (IntPat <$> int) <|> (NamePat <$> symbol'')
+pattern =
+  try (TuplePat <$> tuply pattern)
+  <|> parens pattern
+  <|> (Wildcard <$ symbol "_")
+  <|> (IntPat <$> int)
+  <|> (NamePat <$> symbol'')
 
 tuply :: Parser a -> Parser [a]
 tuply p = symbol "(" >> (([] <$ symbol ")") <|> (:) <$> p <*> (symbol "," >> sepBy1 p (symbol ",")) <* symbol ")")
@@ -52,7 +57,14 @@ case' :: Parser Expr
 case' = symbol "case" >> Case <$> expr <*> braces (sepBy ((,) <$> pattern <*> (symbol "." >> expr)) (symbol ","))
 
 term :: Parser Expr
-term = try tuple <|> parens expr <|> let' <|> case' <|> lambda <|> intLit <|> name
+term =
+  try tuple
+  <|> parens expr
+  <|> let'
+  <|> case'
+  <|> lambda
+  <|> intLit
+  <|> name
 
 expr' = makeExprParser term [[InfixL (pure App)]]
 expr = makeExprParser expr' [[InfixR (Seq <$ symbol ";")]]
