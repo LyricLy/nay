@@ -43,7 +43,7 @@ lambda :: Parser Expr
 lambda = symbol "\\" >> Lambda <$> pattern <*> (symbol "." >> expr)
 
 let' :: Parser Expr
-let' = symbol "let" >> Let <$> pattern <*> (symbol "=" >> expr') <*> (symbol ";" >> expr) 
+let' = symbol "let" >> Let <$> pattern <*> (symbol "=" >> expr') <*> (symbol ";" >> expr)
 
 tuple :: Parser Expr
 tuple = TupleLit <$> tuply expr
